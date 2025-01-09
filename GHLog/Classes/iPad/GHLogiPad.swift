@@ -1,5 +1,3 @@
-import GHLog
-
 public class GHLogiPad {
     public static let shared = GHLogiPad()
     

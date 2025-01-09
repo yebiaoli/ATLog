@@ -1,10 +1,3 @@
-//
-//  GHLogStartup.h
-//  GHLogService
-//
-//  Created by abiaoyo on 2024/12/30.
-//
-
 #import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN

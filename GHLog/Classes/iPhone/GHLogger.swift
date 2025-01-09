@@ -1,10 +1,3 @@
-//
-//  GHLogger.swift
-//  GHLogService
-//
-//  Created by abiaoyo on 2024/12/30.
-//
-
 import Foundation
 import CocoaLumberjack
 

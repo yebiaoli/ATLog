@@ -1,10 +1,3 @@
-//
-//  GHLog.swift
-//  GHLog
-//
-//  Created by abiaoyo on 2024/12/30.
-//
-
 @objc
 public enum GHLogLevel:Int {
     case off

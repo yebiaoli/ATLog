@@ -1,5 +1,3 @@
-import GHLog
-
 public class GHLogiWatch {
     public static let shared = GHLogiWatch()
     

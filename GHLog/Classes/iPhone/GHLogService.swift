@@ -1,13 +1,5 @@
-//
-//  GHLogService.swift
-//  GHLogService
-//
-//  Created by abiaoyo on 2024/12/30.
-//
-
 import Foundation
 import CocoaLumberjack
-import GHLog
 
 @objcMembers
 public class GHLogService: NSObject {
