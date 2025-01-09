@@ -31,13 +31,26 @@ TODO: Add long description of the pod here.
   s.ios.deployment_target = '11.0'
   s.watchos.deployment_target = '3.0'
 
-  s.source_files = 'GHLog/Classes/**/*'
-  
-  # s.resource_bundles = {
-  #   'GHLog' => ['GHLog/Assets/*.png']
-  # }
+  s.default_subspecs = ['Core']
 
-  # s.public_header_files = 'Pod/Classes/**/*.h'
-  # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
+  s.subspec 'Core' do |ss|
+    ss.source_files = 'GHLog/Classes/Core/**/*'
+  end
+
+  s.subspec 'iPhone' do |ss|
+    ss.dependency 'GHLog/Core'
+    ss.dependency 'CocoaLumberjack/Swift', '~> 3.7.2'
+    ss.source_files ='GHLog/Classes/iPhone/**/*'
+  end
+
+  s.subspec 'iPad' do |ss|
+    ss.dependency 'GHLog/Core'
+    ss.source_files = 'GHLog/Classes/iPad/**/*'
+  end
+
+  s.subspec 'iWatch' do |ss|
+    ss.dependency 'GHLog/Core'
+    ss.source_files = 'GHLog/Classes/iWatch/**/*'
+  end
+  
 end

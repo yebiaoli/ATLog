@@ -1,0 +1,6 @@
+module Pods_GHLogDemo {
+  umbrella header "Pods-GHLogDemo-umbrella.h"
+
+  export *
+  module * { export * }
+}
