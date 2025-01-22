@@ -1,12 +1,12 @@
-public class ATLogiPad {
-    public static let shared = ATLogiPad()
+public class ATLogForiPad {
+    public static let shared = ATLogForiPad()
     
     public func startup() {
         ATLog.add(delegate: self)
     }
 }
 
-extension ATLogiPad: ATLogDelegate {
+extension ATLogForiPad: ATLogDelegate {
     
     public func log(level: ATLogLevel, log: String, tag: String?, message: String) {
         print(log + "(iPad)")

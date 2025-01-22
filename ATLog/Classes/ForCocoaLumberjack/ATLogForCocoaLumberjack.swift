@@ -2,9 +2,9 @@ import Foundation
 import CocoaLumberjack
 
 @objcMembers
-public class ATLogiPhone: NSObject {
+public class ATLogForCocoaLumberjack: NSObject {
     
-    public static let shared = ATLogiPhone()
+    public static let shared = ATLogForCocoaLumberjack()
     
     lazy var logFileManager = ATLoggerFileManager()
     lazy var fileLogger = DDFileLogger(logFileManager: logFileManager)
@@ -15,9 +15,6 @@ public class ATLogiPhone: NSObject {
         //打印
         DDLog.add(ATLogger())
         
-//        let logFileManager = ATLoggerFileManager()
-//        
-//        let fileLogger = DDFileLogger(logFileManager: logFileManager)
         fileLogger.rollingFrequency = 60 * 60 * 24 // 24 hours
         fileLogger.logFileManager.maximumNumberOfLogFiles = 30  //最大文件数
         fileLogger.maximumFileSize = 0
@@ -33,9 +30,22 @@ public class ATLogiPhone: NSObject {
     public var currentLogFileName:String? {
         fileLogger.currentLogFileInfo?.fileName
     }
+    
+    public static var logLevel: ATLogLevel = .debug {
+        didSet {
+            switch logLevel {
+            case .off: dynamicLogLevel = .off
+            case .error: dynamicLogLevel = .error
+            case .warn: dynamicLogLevel = .warning
+            case .info: dynamicLogLevel = .info
+            case .debug: dynamicLogLevel = .debug
+            case .verbose: dynamicLogLevel = .verbose
+            }
+        }
+    }
 }
 
-extension ATLogiPhone: ATLogDelegate {
+extension ATLogForCocoaLumberjack: ATLogDelegate {
     
     public func log(level: ATLogLevel, log: String, tag: String?, message: String) {
         switch level {

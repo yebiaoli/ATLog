@@ -14,9 +14,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        ATLogiWatch.shared.startup()
-        ATLogiPad.shared.startup()
-        ATLogiPhone.shared.startup()
+        ATLogForiWatch.shared.startup()
+        ATLogForiPad.shared.startup()
+        ATLogForCocoaLumberjack.shared.startup()
 
         ATLog.level = .verbose
         ATLog.add(delegate: self)

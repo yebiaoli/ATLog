@@ -28,7 +28,7 @@
       "source_files": "ATLog/Classes/Core/**/*"
     },
     {
-      "name": "iPhone",
+      "name": "ForCocoaLumberjack",
       "dependencies": {
         "ATLog/Core": [
 
@@ -37,25 +37,25 @@
           "~> 3.7.2"
         ]
       },
-      "source_files": "ATLog/Classes/iPhone/**/*"
+      "source_files": "ATLog/Classes/ForCocoaLumberjack/**/*"
     },
     {
-      "name": "iPad",
+      "name": "ForiPad",
       "dependencies": {
         "ATLog/Core": [
 
         ]
       },
-      "source_files": "ATLog/Classes/iPad/**/*"
+      "source_files": "ATLog/Classes/ForiPad/**/*"
     },
     {
-      "name": "iWatch",
+      "name": "ForiWatch",
       "dependencies": {
         "ATLog/Core": [
 
         ]
       },
-      "source_files": "ATLog/Classes/iWatch/**/*"
+      "source_files": "ATLog/Classes/ForiWatch/**/*"
     }
   ]
 }

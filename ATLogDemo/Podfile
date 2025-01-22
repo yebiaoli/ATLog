@@ -8,9 +8,9 @@ target 'ATLogDemo' do
   # Pods for ATLogDemo
 
   pod 'ATLog', :path => '../../ATLog'
-  pod 'ATLog/iPhone', :path => '../../ATLog'
-  pod 'ATLog/iPad', :path => '../../ATLog'
-  pod 'ATLog/iWatch', :path => '../../ATLog'
+  pod 'ATLog/ForCocoaLumberjack', :path => '../../ATLog'
+  pod 'ATLog/ForiPad', :path => '../../ATLog'
+  pod 'ATLog/ForiWatch', :path => '../../ATLog'
 
 end
 

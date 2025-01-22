@@ -37,20 +37,20 @@ TODO: Add long description of the pod here.
     ss.source_files = 'ATLog/Classes/Core/**/*'
   end
 
-  s.subspec 'iPhone' do |ss|
+  s.subspec 'ForCocoaLumberjack' do |ss|
     ss.dependency 'ATLog/Core'
     ss.dependency 'CocoaLumberjack/Swift', '~> 3.7.2'
-    ss.source_files ='ATLog/Classes/iPhone/**/*'
+    ss.source_files ='ATLog/Classes/ForCocoaLumberjack/**/*'
   end
 
-  s.subspec 'iPad' do |ss|
+  s.subspec 'ForiPad' do |ss|
     ss.dependency 'ATLog/Core'
-    ss.source_files = 'ATLog/Classes/iPad/**/*'
+    ss.source_files = 'ATLog/Classes/ForiPad/**/*'
   end
 
-  s.subspec 'iWatch' do |ss|
+  s.subspec 'ForiWatch' do |ss|
     ss.dependency 'ATLog/Core'
-    ss.source_files = 'ATLog/Classes/iWatch/**/*'
+    ss.source_files = 'ATLog/Classes/ForiWatch/**/*'
   end
   
 end
