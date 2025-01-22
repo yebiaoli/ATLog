@@ -1,6 +1,0 @@
-module GHLog {
-  umbrella header "GHLog-umbrella.h"
-
-  export *
-  module * { export * }
-}
