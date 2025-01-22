@@ -29,7 +29,7 @@ public protocol ATLogCustomFormatDelegate: AnyObject {
     func logFormat(level:ATLogLevel, tag:String?, message:String) -> String?
 }
 
-fileprivate struct _ATLogiPhone {
+fileprivate struct _ATLogService {
     static var weakContainer = NSHashTable<AnyObject>.weakObjects()
     static var delegates:[ATLogDelegate] {
         let objs = weakContainer.allObjects.compactMap({ $0 as? ATLogDelegate })
@@ -42,6 +42,8 @@ fileprivate struct _ATLogiPhone {
         weakContainer.remove(delegate)
     }
     static weak var customLogFormatDelegate:ATLogCustomFormatDelegate?
+    
+    static var logCallback:((_ level:ATLogLevel, _ log:String, _ tag:String?, _ message:String) -> Void)?
 }
 
 @objcMembers
@@ -53,19 +55,25 @@ final public class ATLogOC:NSObject {
     }
     
     public static var customLogFormatDelegate:ATLogCustomFormatDelegate? {
-        get { _ATLogiPhone.customLogFormatDelegate }
-        set { _ATLogiPhone.customLogFormatDelegate = newValue }
+        get { _ATLogService.customLogFormatDelegate }
+        set { _ATLogService.customLogFormatDelegate = newValue }
     }
     
     public static func add(delegate:ATLogDelegate) {
-        _ATLogiPhone.add(delegate: delegate)
+        _ATLogService.add(delegate: delegate)
     }
     public static func remove(delegate:ATLogDelegate) {
-        _ATLogiPhone.remove(delegate: delegate)
+        _ATLogService.remove(delegate: delegate)
     }
     
     public static func log(_ level:ATLogLevel, tag:String? = nil, messageCallback:(() -> String)) {
         ATLog.log(level, tag: tag, messageCallback: messageCallback)
+    }
+    
+    ///这个是日志回调，用于处理日志的具体实现，打印日志不要调用这里
+    public static var logCallback:((_ level:ATLogLevel, _ log:String, _ tag:String?, _ message:String) -> Void)? {
+        set { ATLog.logCallback = newValue }
+        get { return ATLog.logCallback }
     }
 }
 
@@ -75,17 +83,16 @@ final public class ATLog {
     #else
     public static var level:ATLogLevel = .off
     #endif
-    
     public static var customLogFormatDelegate:ATLogCustomFormatDelegate? {
-        get { _ATLogiPhone.customLogFormatDelegate }
-        set { _ATLogiPhone.customLogFormatDelegate = newValue }
+        get { _ATLogService.customLogFormatDelegate }
+        set { _ATLogService.customLogFormatDelegate = newValue }
     }
     
     public static func add(delegate:ATLogDelegate) {
-        _ATLogiPhone.add(delegate: delegate)
+        _ATLogService.add(delegate: delegate)
     }
     public static func remove(delegate:ATLogDelegate) {
-        _ATLogiPhone.remove(delegate: delegate)
+        _ATLogService.remove(delegate: delegate)
     }
     
     private static func canNext(_ level:ATLogLevel) -> Bool {
@@ -97,8 +104,9 @@ final public class ATLog {
     
     private static let formatter = DateFormatter()
     private static func next(level:ATLogLevel, tag:String?, message:String) {
-        if let formatDelegate = _ATLogiPhone.customLogFormatDelegate, let log = formatDelegate.logFormat(level: level, tag: tag, message: message) {
-            _ATLogiPhone.delegates.forEach { delegate in
+        if let formatDelegate = _ATLogService.customLogFormatDelegate, let log = formatDelegate.logFormat(level: level, tag: tag, message: message) {
+            _ATLogService.logCallback?(level, log, tag, message)
+            _ATLogService.delegates.forEach { delegate in
                 delegate.log(level: level, log: log, tag: tag, message: message)
             }
             return
@@ -115,7 +123,8 @@ final public class ATLog {
             
             let _message = message.replacingOccurrences(of: "\n", with: "\n" + t + " ").replacingOccurrences(of: "\r", with: "\r" + t + " ")
             let log = "\(time) \(t) \(_message)"
-            _ATLogiPhone.delegates.forEach { delegate in
+            _ATLogService.logCallback?(level, log, tag, message)
+            _ATLogService.delegates.forEach { delegate in
                 delegate.log(level: level, log: log, tag: tag, message: message)
             }
         } else {
@@ -123,7 +132,8 @@ final public class ATLog {
             let head = "\(level.key_short).log" + tag
             let _message = message.replacingOccurrences(of: "\n", with: "\n" + head + " ").replacingOccurrences(of: "\r", with: "\r" + head + " ")
             let log = "\(time) \(head) \(_message)"
-            _ATLogiPhone.delegates.forEach { delegate in
+            _ATLogService.logCallback?(level, log, tag, message)
+            _ATLogService.delegates.forEach { delegate in
                 delegate.log(level: level, log: log, tag: tag, message: message)
             }
         }
@@ -144,6 +154,12 @@ final public class ATLog {
         }
         let message = args.map { "\($0)" }.joined(separator: separator)
         next(level: level, tag: tag, message: message)
+    }
+    
+    ///这个是日志回调，用于处理日志的具体实现，打印日志不要调用这里
+    public static var logCallback:((_ level:ATLogLevel, _ log:String, _ tag:String?, _ message:String) -> Void)? {
+        set { _ATLogService.logCallback = newValue }
+        get { return _ATLogService.logCallback }
     }
     
 }

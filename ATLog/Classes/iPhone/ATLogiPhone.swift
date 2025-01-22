@@ -24,6 +24,8 @@ public class ATLogiPhone: NSObject {
         //文件
         DDLog.add(fileLogger)
         
+//        fileLogger.currentLogFileInfo?.fileName
+        
         ATLog.add(delegate: self)
     }
 }
