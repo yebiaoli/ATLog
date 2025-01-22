@@ -7,6 +7,16 @@ public enum ATLogLevel:Int {
     case debug
     case verbose
     
+    public var key:String {
+        switch self {
+        case .off: "off"
+        case .error: "error"
+        case .warn: "warn"
+        case .info: "info"
+        case .debug: "debug"
+        case .verbose: "verbose"
+        }
+    }
     public var key_short:String {
         switch self {
         case .off: "o"
