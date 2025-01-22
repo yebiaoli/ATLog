@@ -6,15 +6,18 @@ public class ATLogiPhone: NSObject {
     
     public static let shared = ATLogiPhone()
     
+    lazy var logFileManager = ATLoggerFileManager()
+    lazy var fileLogger = DDFileLogger(logFileManager: logFileManager)
+    
     public func startup() {
         //初始化日志系统
         
         //打印
         DDLog.add(ATLogger())
         
-        let logFileManager = ATLoggerFileManager()
-        
-        let fileLogger = DDFileLogger(logFileManager: logFileManager)
+//        let logFileManager = ATLoggerFileManager()
+//        
+//        let fileLogger = DDFileLogger(logFileManager: logFileManager)
         fileLogger.rollingFrequency = 60 * 60 * 24 // 24 hours
         fileLogger.logFileManager.maximumNumberOfLogFiles = 30  //最大文件数
         fileLogger.maximumFileSize = 0
@@ -24,9 +27,11 @@ public class ATLogiPhone: NSObject {
         //文件
         DDLog.add(fileLogger)
         
-//        fileLogger.currentLogFileInfo?.fileName
-        
         ATLog.add(delegate: self)
+    }
+    
+    public var currentLogFileName:String? {
+        fileLogger.currentLogFileInfo?.fileName
     }
 }
 
